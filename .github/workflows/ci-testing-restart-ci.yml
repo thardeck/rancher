@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   restart-ci:
-    runs-on: ubuntu-latest
+    runs-on:  ubuntu-latest
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:

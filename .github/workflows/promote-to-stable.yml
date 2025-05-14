@@ -21,7 +21,7 @@ env:
   NEW_TAG: ${{ github.event.inputs.promote-to }}
 jobs:
   promote-docker-image:
-    runs-on: ubuntu-latest
+    runs-on:  ubuntu-latest
     container:
       image: quay.io/skopeo/stable:v1.15
     permissions:
@@ -40,7 +40,7 @@ jobs:
         run: skopeo copy docker://${{ env.REGISTRY }}/${{ env.IMAGE }}:${{ env.TAG }} docker://${{ env.REGISTRY }}/${{ env.IMAGE }}:${{ env.NEW_TAG }} --all
   promote-chart:
     if: ${{ github.event.inputs.promote-to }} == "stable" # Only promote the chart if it's being promoted to stable
-    runs-on: ubuntu-latest
+    runs-on:  ubuntu-latest
     permissions:
       contents: read
       id-token: write

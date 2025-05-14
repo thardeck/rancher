@@ -17,7 +17,7 @@ jobs:
   unit-tests:
     uses: ./.github/workflows/unit-test.yml
   build-server:
-    runs-on: runs-on,runner=4cpu-${{ matrix.os }}-${{ matrix.arch }},image=ubuntu22-full-${{ matrix.arch }},run-id=${{ github.run_id }}
+    runs-on:  ubuntu-latest
     strategy:
       matrix:
         os: [linux]
@@ -35,7 +35,7 @@ jobs:
       matrix:
         os: [linux]
         arch: [x64, arm64]
-    runs-on: runs-on,runner=4cpu-${{ matrix.os }}-${{ matrix.arch }},image=ubuntu22-full-${{ matrix.arch }},run-id=${{ github.run_id }}
+    runs-on:  ubuntu-latest
     env:
       ARCH: ${{ matrix.arch }}
       OS: ${{ matrix.os }}
@@ -54,7 +54,7 @@ jobs:
       matrix:
         os: [windows]
         version: [2019, 2022]
-    runs-on: ${{ matrix.os }}-${{ matrix.version }}
+    runs-on:  ubuntu-latest
     permissions:
       contents: read
       id-token: write
@@ -75,7 +75,7 @@ jobs:
       matrix:
         os: [linux]
         arch: [x64, arm64]
-    runs-on: runs-on,runner=2cpu-${{ matrix.os }}-${{ matrix.arch }},image=ubuntu22-full-${{ matrix.arch }},run-id=${{ github.run_id }}
+    runs-on:  ubuntu-latest
     permissions:
       contents: read
       id-token: write
@@ -95,7 +95,7 @@ jobs:
         uses: ./.github/actions/push-images
   build-publish-chart:
     needs: [push-images]
-    runs-on: org-${{ github.repository_owner_id }}-amd64-k8s
+    runs-on:  ubuntu-latest
     container: registry.suse.com/bci/bci-base:latest
     permissions:
       contents: read
@@ -128,7 +128,7 @@ jobs:
         uses: ./.github/actions/rancher-chart/publish-aws
   merge-server-manifest:
     needs: [push-images]
-    runs-on: runs-on,runner=2cpu-linux-x64,image=ubuntu22-full-x64,run-id=${{ github.run_id }}
+    runs-on:  ubuntu-latest
     permissions:
       contents: read
       id-token: write
@@ -145,7 +145,7 @@ jobs:
         uses: ./.github/actions/merge-manifests/server
   merge-agent-manifest:
     needs: [push-images, build-agent-windows]
-    runs-on: runs-on,runner=2cpu-linux-x64,image=ubuntu22-full-x64,run-id=${{ github.run_id }}
+    runs-on:  ubuntu-latest
     permissions:
       contents: read
       id-token: write
@@ -161,7 +161,7 @@ jobs:
       - name: merge
         uses: ./.github/actions/merge-manifests/agent
   build-installer:
-    runs-on: runs-on,runner=4cpu-${{ matrix.os }}-${{ matrix.arch }},image=ubuntu22-full-${{ matrix.arch }},run-id=${{ github.run_id }}
+    runs-on:  ubuntu-latest
     strategy:
       matrix:
         os: [linux]
@@ -185,7 +185,7 @@ jobs:
         uses: ./.github/actions/build-images/installer
   merge-installer-manifest:
     needs: [build-installer]
-    runs-on: runs-on,runner=2cpu-linux-x64,image=ubuntu22-full-x64,run-id=${{ github.run_id }}
+    runs-on:  ubuntu-latest
     permissions:
       contents: read
       id-token: write
@@ -201,7 +201,7 @@ jobs:
       - name: merge
         uses: ./.github/actions/merge-manifests/installer
   create-images-files:
-    runs-on: runs-on,runner=2cpu-linux-x64,image=ubuntu22-full-x64,run-id=${{ github.run_id }}
+    runs-on:  ubuntu-latest
     permissions:
       contents: write
       id-token: write

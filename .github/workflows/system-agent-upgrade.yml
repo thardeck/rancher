@@ -22,7 +22,7 @@ permissions:
   pull-requests: write
 jobs:
   system-agent-upgrade:
-    runs-on: ubuntu-latest
+    runs-on:  ubuntu-latest
     steps:
       - name: Read App Secrets
         uses: rancher-eio/read-vault-secrets@main
